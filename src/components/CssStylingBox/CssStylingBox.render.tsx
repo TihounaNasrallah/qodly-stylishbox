@@ -5,7 +5,7 @@ import {
   useWebformPath,
 } from '@ws-ui/webform-editor';
 import cn from 'classnames';
-import { FC, CSSProperties } from 'react';
+import { FC, CSSProperties, useEffect, useState } from 'react';
 import { Element } from '@ws-ui/craftjs-core';
 import { ICssStylingBoxProps, IParameters } from './CssStylingBox.config';
 
@@ -13,8 +13,7 @@ const CssStylingBox: FC<ICssStylingBoxProps> = ({ parameters, className, classNa
   const { connect } = useRenderer();
   const { resolver } = useEnhancedEditor(selectResolver);
   const path = useWebformPath();
-
-  let transformedObject = {};
+  const [transformedObject, setTransformedObject] = useState<CSSProperties>({});
 
   const ds = window.DataSource.getSource(parameters[0].source, path);
   ds?.getValue().then();
@@ -31,17 +30,16 @@ const CssStylingBox: FC<ICssStylingBoxProps> = ({ parameters, className, classNa
     return transformed;
   };
 
-  const main = async () => {
-    transformedObject = await processArray(parameters);
-  };
+  useEffect(() => {
+    const main = async () => {
+      const Object = await processArray(parameters);
+      setTransformedObject(Object);
+    };
+    main();
+  }, [parameters]);
 
-  main();
   return (
-    <div
-      ref={connect}
-      style={transformedObject as CSSProperties}
-      className={cn(className, classNames)}
-    >
+    <div ref={connect} style={transformedObject} className={cn(className, classNames)}>
       <Element id="conatainer" is={resolver.StyleBox} canvas />
     </div>
   );
