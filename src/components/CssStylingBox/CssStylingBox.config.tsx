@@ -53,7 +53,9 @@ export default {
     ],
     datasources: {},
   },
-  defaultProps: {},
+  defaultProps: {
+    iterableChild: true,
+  },
 } as T4DComponentConfig<ICssStylingBoxProps>;
 
 export interface ICssStylingBoxProps extends webforms.ComponentProps {
