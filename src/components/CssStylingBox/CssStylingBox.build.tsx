@@ -21,7 +21,7 @@ const CssStylingBox: FC<ICssStylingBoxProps> = ({ parameters, className, classNa
 
   return (
     <div ref={connect} style={style} className={cn(className, classNames)}>
-      <Element id="conatainer" is={resolver.StyleBox} canvas />
+      <Element id="container" is={resolver.StyleBox} canvas />
     </div>
   );
 };
