@@ -18,16 +18,16 @@ const CssStylingBox: FC<ICssStylingBoxProps> = ({ parameters, className, classNa
   const processArray = async (arr: IParameters[]): Promise<CSSProperties> => {
     const transformed: CSSProperties = {};
     for (const obj of arr) {
-      const ds = window.DataSource.getSource(obj.source, path);
+      const ds = window.DataSource.getSourceOrBuild(obj.source, null, window.$$datastores.ds, path);
+      window.DataSource.createRequestOptimization(path);
+      console.log(obj.source);
+      // const ds = window.DataSource.getSource(obj.source, path);
       const value = await ds?.getValue();
-      const propertyName = `${obj.name}`;
-      if (value) {
-        const tempObj: CSSProperties = { [propertyName]: value };
-        Object.assign(transformed, tempObj);
-      } else {
-        const tempObj: CSSProperties = { [propertyName]: obj.defaultValue };
-        Object.assign(transformed, tempObj);
-      }
+      const propertyName = `--${obj.name}`;
+      const tempObj: CSSProperties = {
+        [propertyName]: value && value !== '' ? value : obj.defaultValue,
+      };
+      Object.assign(transformed, tempObj);
     }
     return transformed;
   };
