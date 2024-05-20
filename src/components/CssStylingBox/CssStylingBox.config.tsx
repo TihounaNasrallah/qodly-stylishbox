@@ -1,7 +1,6 @@
 import { EComponentKind, T4DComponentConfig } from '@ws-ui/webform-editor';
 import { Settings } from '@ws-ui/webform-editor';
-import { MdOutlineTextSnippet } from 'react-icons/md';
-
+import { BsBoundingBoxCircles } from 'react-icons/bs';
 import CssStylingBoxSettings, { BasicSettings } from './CssStylingBox.settings';
 
 export default {
@@ -20,7 +19,7 @@ export default {
   info: {
     displayName: 'CssStylingBox',
     exposed: true,
-    icon: MdOutlineTextSnippet,
+    icon: BsBoundingBoxCircles,
     events: [
       {
         label: 'On Click',
@@ -41,14 +40,6 @@ export default {
       {
         label: 'On MouseLeave',
         value: 'onmouseleave',
-      },
-      {
-        label: 'On KeyDown',
-        value: 'onkeydown',
-      },
-      {
-        label: 'On KeyUp',
-        value: 'onkeyup',
       },
     ],
     datasources: {},
