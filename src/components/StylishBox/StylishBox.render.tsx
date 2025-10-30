@@ -24,7 +24,10 @@ const StylishBox: FC<IStylishBoxProps> = ({ parameters, className, classNames = 
     async (arr: IParameters[]): Promise<void> => {
       const transformed: CSSProperties = {};
       for (const obj of arr) {
-        const ds = getDatasource(obj.source, obj.source.startsWith('$'));
+        const ds = getDatasource(
+          obj.source,
+          obj.source.startsWith('$') || obj.source.includes(':$'),
+        );
         if (ds) {
           const value = await ds.getValue();
           const propertyName = `--${obj.name}`;
@@ -43,7 +46,10 @@ const StylishBox: FC<IStylishBoxProps> = ({ parameters, className, classNames = 
     const main = async () => {
       await processArray(parameters);
       for (const obj of parameters) {
-        const ds = getDatasource(obj.source, obj.source.startsWith('$'));
+        const ds = getDatasource(
+          obj.source,
+          obj.source.startsWith('$') || obj.source.includes(':$'),
+        );
         if (ds) {
           ds.addListener('changed', () => {
             processArray(parameters);
@@ -55,7 +61,10 @@ const StylishBox: FC<IStylishBoxProps> = ({ parameters, className, classNames = 
 
     return () => {
       parameters.forEach((obj) => {
-        const ds = getDatasource(obj.source, obj.source.startsWith('$'));
+        const ds = getDatasource(
+          obj.source,
+          obj.source.startsWith('$') || obj.source.includes(':$'),
+        );
         if (ds) {
           ds.removeListener('changed', () => processArray(parameters));
         }
